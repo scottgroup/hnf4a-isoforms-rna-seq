@@ -1,0 +1,54 @@
+{
+    "datasets":
+    {
+        "A0N1": "SRR8503142",
+        "A0N2": "SRR8503143",
+        "A0N3": "SRR8503144",
+        "A1N1": "SRR8503145",
+        "A1N2": "SRR8503146",
+        "A1N3": "SRR8503147",
+        "A2N1": "SRR8503148",
+        "A2N2": "SRR8503149",
+        "A2N3": "SRR8503150",
+        "A3N1": "SRR8503151",
+        "A3N2": "SRR8503152",
+        "A3N3": "SRR8503153",
+        "A4N1": "SRR8503154",
+        "A4N2": "SRR8503155",
+        "A4N3": "SRR8503156",
+        "A5N1": "SRR8503157",
+        "A5N2": "SRR8503158",
+        "A5N3": "SRR8503159",
+        "A6N1": "SRR8503160",
+        "A6N2": "SRR8503161",
+        "A6N3": "SRR8503162",
+        "A7N1": "SRR8503163",
+        "A7N2": "SRR8503164",
+        "A7N3": "SRR8503165",
+        "A8N1": "SRR8503166",
+        "A8N2": "SRR8503167",
+        "A8N3": "SRR8503168",
+        "A9N1": "SRR8503169",
+        "A9N2": "SRR8503170",
+        "A9N3": "SRR8503171",
+        "A10N1": "SRR8503172",
+        "A10N2": "SRR8503173",
+        "A10N3": "SRR8503174",
+        "A11N1": "SRR8503175",
+        "A11N2": "SRR8503176",
+        "A11N3": "SRR8503177",
+        "A12N1": "SRR8503178",
+        "A12N2": "SRR8503179",
+        "A12N3": "SRR8503180",
+    },
+    "download":
+    {
+        "annotation": "ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/H_sapiens/GFF/ref_GRCh38.p12_top_level.gff3.gz",
+        "genome": "ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/annotation/GRCh38_latest/refseq_identifiers/GRCh38_latest_genomic.fna.gz"
+    },
+    "path":
+    {
+        "annotation": "data/references/annotation.gtf",
+        "genome": "data/references/genome.fa"
+    }
+}
