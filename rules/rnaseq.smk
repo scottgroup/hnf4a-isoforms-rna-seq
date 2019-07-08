@@ -4,10 +4,10 @@ rule trimming:
         fq1 = rules.split_sra_datasets.output.fq1,
         fq2 = rules.split_sra_datasets.output.fq2
     output:
-        fq1 = "data/trimmed/{srr_id}_1.fastq",
-        fq2 = "data/trimmed/{srr_id}_2.fastq",
-        unpaired_fq1 = "data/trimmed/{srr_id}_1.unpaired.fastq",
-        unpaired_fq2 = "data/trimmed/{srr_id}_2.unpaired.fastq"
+        fq1 = "data/trimmed/{srr_id}_1.fastq.gz",
+        fq2 = "data/trimmed/{srr_id}_2.fastq.gz",
+        unpaired_fq1 = "data/trimmed/{srr_id}_1.unpaired.fastq.gz",
+        unpaired_fq2 = "data/trimmed/{srr_id}_2.unpaired.fastq.gz"
     params:
         options = [
             "ILLUMINACLIP:data/adapters.fa:2:30:10", "LEADING:25",
@@ -24,10 +24,11 @@ rule trimming:
         "-threads {threads} "
         "-phred33 "
         "{input.fq1} {input.fq2} "
-        "{output.fq1} {output.fq2} "
-        "{output.unpaired_fq1} {output.unpaired_fq2} "
+        "{output.fq1} {output.unpaired_fq1}  "
+        "{output.fq2} {output.unpaired_fq2} "
         "{params.options} "
         "&> {log}"
+
 
 rule qc:
     input:
@@ -52,4 +53,49 @@ rule qc:
         "--threads {threads} "
         "{input.fq1} {input.fq2} "
         "{input.unpaired_fq1} {input.unpaired_fq2} "
+        "&> {log}"
+
+
+rule kallisto_index:
+    input:
+        transcriptome = rules.create_transcriptome.output.seqs
+    output:
+        idx = "data/references/kallisto.idx"
+    params:
+        kmer = "31"
+    log:
+        "logs/kallisto/index.log"
+    conda:
+        "../envs/kallisto.yaml"
+    shell:
+        "kallisto index "
+        "--index={output.idx} "
+        "--kmer-size={params.kmer} "
+        "{input.transcriptome} "
+        "&> {log}"
+
+
+rule kallisto_quant:
+    input:
+        idx = rules.kallisto_index.output.idx,
+        fq1 = rules.trimming.output.fq1,
+        fq2 = rules.trimming.output.fq2
+    output:
+        outdir = directory("results/kallisto/{srr_id}")
+    params:
+        bootstrap = "50"
+    log:
+        "logs/kallisto/{srr_id}.log"
+    threads:
+        32
+    conda:
+        "../envs/kallisto.yaml"
+    shell:
+        "kallisto quant "
+        "--bias "
+        "--index={input.idx} "
+        "--output-dir={output.outdir} "
+        "--bootstrap-samples={params.bootstrap} "
+        "--threads={threads} "
+        "{input.fq1} {input.fq2} "
         "&> {log}"

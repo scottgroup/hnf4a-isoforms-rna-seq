@@ -39,7 +39,8 @@ rule modify_annotation:
     conda:
         "../envs/gffread.yaml"
     shell:
-        "gffread -TF {input.gff3} | "
+        "gffread -TF {input.gff3} -o- | "
+        "awk '/^NC/' | "
         "awk '!/HGNC:5024,/' > {output.gtf}"
 
 
@@ -69,7 +70,7 @@ rule download_datasets:
     conda:
         "../envs/sra_tools.yaml"
     shell:
-        "wget -O {output.sra_file} {params.link}"
+        "wget --quiet -O {output.sra_file} {params.link}"
 
 
 rule split_sra_datasets:
@@ -77,8 +78,8 @@ rule split_sra_datasets:
     input:
         sra_file = rules.download_datasets.output.sra_file
     output:
-        fq1 = "data/reads/{srr_id}_1.fastq",
-        fq2 = "data/reads/{srr_id}_2.fastq"
+        fq1 = "data/reads/{srr_id}_1.fastq.gz",
+        fq2 = "data/reads/{srr_id}_2.fastq.gz"
     params:
         path = "data/reads"
     conda:
