@@ -49,6 +49,7 @@
     "path":
     {
         "annotation": "data/references/annotation.gtf",
-        "genome": "data/references/genome.fa"
+        "genome": "data/references/genome.fa",
+        "transcriptome": "data/references/transcriptome.fa"
     }
 }

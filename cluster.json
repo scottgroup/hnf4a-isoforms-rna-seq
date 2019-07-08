@@ -1,0 +1,17 @@
+{
+    "__default__":
+    {
+        "job-name": "SM.{rule}",
+        "nodes": "1",
+        "cpus-per-task": "32",
+        "mem": "125G",
+        "time": "0-1:00:00",
+        "mail-user": "YOUR@EMAIL.IT",
+        "mail-type": "FAIL"
+    },
+    "translateRefseqChr":
+    {
+        "cpus-per-task": "1",
+	      "mem": "8G"
+    }
+}
