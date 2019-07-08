@@ -8,16 +8,6 @@ def sra_download_link(wildcards):
     ])
 
 
-rule download_genome:
-    """ Download the genome from RefSeq FTP servers """
-    output:
-        genome = config['path']['genome']
-    params:
-        link = config['download']['genome']
-    shell:
-        "wget --quiet -O {output.genome}.gz {params.link} && "
-        "gzip -d {output.genome}.gz "
-
 
 rule download_annotation:
     """ Download RefSeq GFF3 annotation """
@@ -28,6 +18,29 @@ rule download_annotation:
     shell:
         "wget --quiet -O {output.gff3}.gz {params.link} && "
         "gzip -d {output.gff3}.gz"
+
+
+rule download_datasets:
+    """ """
+    output:
+        sra_file = "data/reads/{srr_id}.sra"
+    params:
+        link = sra_download_link
+    conda:
+        "../envs/sra_tools.yaml"
+    shell:
+        "wget --quiet -O {output.sra_file} {params.link}"
+
+
+rule download_genome:
+    """ Download the genome from RefSeq FTP servers """
+    output:
+        genome = config['path']['genome']
+    params:
+        link = config['download']['genome']
+    shell:
+        "wget --quiet -O {output.genome}.gz {params.link} && "
+        "gzip -d {output.genome}.gz "
 
 
 rule modify_annotation:
@@ -59,18 +72,6 @@ rule create_transcriptome:
         "gffread {input.gtf} -g {input.genome} -w {output.seqs}.temp && "
         "cat {output.seqs}.temp {params.hnf4a_sequences} >> {output.seqs} && "
         "rm {output.seqs}.temp"
-
-
-rule download_datasets:
-    """ """
-    output:
-        sra_file = "data/reads/{srr_id}.sra"
-    params:
-        link = sra_download_link
-    conda:
-        "../envs/sra_tools.yaml"
-    shell:
-        "wget --quiet -O {output.sra_file} {params.link}"
 
 
 rule split_sra_datasets:
