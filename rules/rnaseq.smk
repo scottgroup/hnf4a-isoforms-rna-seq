@@ -105,7 +105,7 @@ rule combine_gene_quantification:
     input:
         datasets = expand(
             "results/kallisto/{srr_id}/abundance.tsv",
-            srr_id=['SRR8503142', 'SRR8503145'] # config['datasets'].values()
+            srr_id=config['datasets'].values()
         ),
         map = rules.generate_transcriptID_geneName.output.map
     output:
