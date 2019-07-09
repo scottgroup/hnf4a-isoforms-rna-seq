@@ -1,2 +1,9 @@
 # Snakemake files
 .snakemake
+logs/
+
+# Data folders
+data/reads
+data/qc
+data/trimmed
+results/

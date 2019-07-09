@@ -99,3 +99,19 @@ rule kallisto_quant:
         "--threads={threads} "
         "{input.fq1} {input.fq2} "
         "&> {log}"
+
+
+rule combine_gene_quantification:
+    input:
+        datasets = expand(
+            "results/kallisto/{srr_id}/abundance.tsv",
+            srr_id=['SRR8503142', 'SRR8503145'] # config['datasets'].values()
+        ),
+        map = rules.generate_transcriptID_geneName.output.map
+    output:
+        tpm = "results/kallisto/tpm.tsv",
+        est_counts = "results/kallisto/est_counts.tsv"
+    conda:
+        "../envs/python.yaml"
+    script:
+        "../scripts/combine_gene_quantification.py"

@@ -93,3 +93,18 @@ rule split_sra_datasets:
         "--gzip "
         "-O {params.path} {input.sra_file} "
         "&> {log}"
+
+
+rule generate_transcriptID_geneName:
+    """
+    Generating a two-column text file containing the gene -> transcript
+    relationship
+    """
+    input:
+        gtf = rules.modify_annotation.output.gtf
+    output:
+        map = "data/references/gene_name.txt"
+    conda:
+        "../envs/python.yaml"
+    script:
+        "../scripts/generate_transcriptID_geneName.py"
