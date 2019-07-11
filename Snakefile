@@ -4,7 +4,7 @@ rule all:
     input:
         config['path']['annotation'],
         expand("data/qc/{srr_id}_1_fastqc.html", srr_id=config['datasets'].values()),
-        expand("results/kallisto/{srr_id}", srr_id=config['datasets'].values()),
+        expand("results/kallisto/{srr_id}/abundance.tsv", srr_id=config['datasets'].values()),
         "results/DESeq2"
 
 rule all_downloads:

@@ -10,8 +10,8 @@ rule trimming:
         unpaired_fq2 = "data/trimmed/{srr_id}_2.unpaired.fastq.gz"
     params:
         options = [
-            "ILLUMINACLIP:data/adapters.fa:2:30:10", "LEADING:25",
-            "TRAILING:25", "MINLEN:45"
+            "ILLUMINACLIP:data/adapters.fa:2:30:10", "LEADING:5",
+            "TRAILING:5", "MINLEN:45"
         ]
     log:
         "logs/trimmomatic/{srr_id}.log"
@@ -81,9 +81,10 @@ rule kallisto_quant:
         fq1 = rules.trimming.output.fq1,
         fq2 = rules.trimming.output.fq2
     output:
-        outdir = directory("results/kallisto/{srr_id}")
+        quant = "results/kallisto/{srr_id}/abundance.tsv"
     params:
-        bootstrap = "50"
+        bootstrap = "50",
+	outdir = "results/kallisto/{srr_id}"
     log:
         "logs/kallisto/{srr_id}.log"
     threads:
@@ -94,7 +95,7 @@ rule kallisto_quant:
         "kallisto quant "
         "--bias "
         "--index={input.idx} "
-        "--output-dir={output.outdir} "
+        "--output-dir={params.outdir} "
         "--bootstrap-samples={params.bootstrap} "
         "--threads={threads} "
         "{input.fq1} {input.fq2} "
