@@ -43,16 +43,16 @@ If working on a cluster, either go for a local installation, or check if it is n
 
 ## Run
 To run the workflow locally simply run the following command in the Snakemake conda environment, where `$CORES` is the number of avaiable cores.
-```
+```bash
 snamemake --use-conda --cores=$CORES
 ```
 
 To run on a Slurm cluster, one can use the following command to output all tasks at once.
-```
+```bash
 snakemake -j 999 --use-conda --immediate-submit --notemp --cluster-config cluster.json --cluster 'python3 slurmSubmit.py {dependencies}'
 ```
 
 If the cluster nodes do not have internet access, one can run the tasks requiring internet locally with :
-```
+```bash
 snakemake all_downloads --use-conda --$CORES
 ```
