@@ -54,5 +54,5 @@ snakemake -j 999 --use-conda --immediate-submit --notemp --cluster-config cluste
 
 If the cluster nodes do not have internet access, one can run the tasks requiring internet locally with :
 ```bash
-snakemake all_downloads --use-conda --$CORES
+snakemake all_downloads --use-conda --cores=$CORES
 ```
