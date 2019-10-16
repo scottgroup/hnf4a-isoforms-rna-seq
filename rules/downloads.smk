@@ -8,11 +8,10 @@ def sra_download_link(wildcards):
     ])
 
 
-
 rule download_annotation:
     """ Downloads RefSeq GFF3 annotation """
     output:
-        gff3 = temp("data/temp/annotation.gff3")
+        gff3 = temp("data/references/temp_annotation.gff3")
     params:
         link = config['download']['annotation']
     shell:
