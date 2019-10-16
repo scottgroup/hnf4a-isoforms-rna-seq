@@ -7,7 +7,7 @@ This repository contains the RNA-seq workflow used in :
 [doi:10.1101/585604 ](https://doi.org/10.1101/585604 )
 
 
-# RNA-Seq pipeline
+# RNA-seq pipeline
 
 __Author__ : Joël Simoneau
 
@@ -24,7 +24,7 @@ bash Miniconda3-latest-Linux-x86_64.sh
 Answer `yes` to `Do you wish the installer to initialize Miniconda3?`
 
 
-To create the Snakemake environment used to launch Snakemake, run the following. The `conda create` command can appear to be stuck on `Solving environment`. While we are actually arguably [never going to solve the environment](https://www.ipcc.ch/sr15/chapter/summary-for-policy-makers/), the command is probably not stuck. Just be patient.
+To create the Snakemake environment used to launch Snakemake, run the following. The `conda create` command can appear to be stuck on `Solving environment`. While we are actually arguably [never going to solve the environment](https://www.ipcc.ch/sr15/chapter/spm/), the command is probably not stuck. Just be patient.
 
 ```bash
 exec bash

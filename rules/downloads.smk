@@ -1,6 +1,6 @@
 
 def sra_download_link(wildcards):
-    """ Dude """
+    """ Returns all FTP url for SRA download """
     url = "ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR"
     return '/'.join([
         url, wildcards.srr_id[:6],
@@ -10,7 +10,7 @@ def sra_download_link(wildcards):
 
 
 rule download_annotation:
-    """ Download RefSeq GFF3 annotation """
+    """ Downloads RefSeq GFF3 annotation """
     output:
         gff3 = temp("data/temp/annotation.gff3")
     params:
@@ -21,7 +21,7 @@ rule download_annotation:
 
 
 rule download_datasets:
-    """ """
+    """ Downloads the datasets from the SRA FTP server """
     output:
         sra_file = "data/reads/{srr_id}.sra"
     params:
@@ -33,7 +33,7 @@ rule download_datasets:
 
 
 rule download_genome:
-    """ Download the genome from RefSeq FTP servers """
+    """ Downloads the genome from RefSeq FTP servers """
     output:
         genome = config['path']['genome']
     params:
@@ -44,7 +44,7 @@ rule download_genome:
 
 
 rule modify_annotation:
-    """ Transform annotation to GTF and remove HNF4alpha definitions """
+    """ Transforms annotation to GTF and remove HNF4alpha definitions """
     input:
         gff3 = rules.download_annotation.output.gff3
     output:
@@ -58,7 +58,7 @@ rule modify_annotation:
 
 
 rule create_transcriptome:
-    """ """
+    """ Uses gffread to generate a transcriptome """
     input:
         genome = rules.download_genome.output.genome,
         gtf = rules.modify_annotation.output.gtf
@@ -75,7 +75,7 @@ rule create_transcriptome:
 
 
 rule split_sra_datasets:
-    """ """
+    """ Splits the raw SRA files into the two corresponding FASTQ files """
     input:
         sra_file = rules.download_datasets.output.sra_file
     output:

@@ -3,6 +3,7 @@
 logs/
 
 # Data folders
+data/references
 data/reads
 data/qc
 data/trimmed

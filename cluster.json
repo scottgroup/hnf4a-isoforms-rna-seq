@@ -6,7 +6,7 @@
         "cpus-per-task": "1",
         "mem": "8G",
         "time": "0-2:30:00",
-        "mail-user": "YOUR@EMAIL.IT",
+        "mail-user": "YOUR@EMAIL.HERE",
         "mail-type": "FAIL"
     },
     "split_sra_datasets":

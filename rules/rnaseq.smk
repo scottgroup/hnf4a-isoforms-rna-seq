@@ -1,5 +1,6 @@
 
 rule trimming:
+    """ Trims the FASTQ files using Trimmomatic """
     input:
         fq1 = rules.split_sra_datasets.output.fq1,
         fq2 = rules.split_sra_datasets.output.fq2
@@ -31,6 +32,7 @@ rule trimming:
 
 
 rule qc:
+    """ Assess the FASTQ quality using FastQC """
     input:
         fq1 = rules.trimming.output.fq1,
         fq2 = rules.trimming.output.fq2,
@@ -57,6 +59,7 @@ rule qc:
 
 
 rule kallisto_index:
+    """ Generates the transcriptome index for Kallisto """
     input:
         transcriptome = rules.create_transcriptome.output.seqs
     output:
@@ -76,6 +79,7 @@ rule kallisto_index:
 
 
 rule kallisto_quant:
+    """ Generates counts using Kallisto pseudo-alignment """
     input:
         idx = rules.kallisto_index.output.idx,
         fq1 = rules.trimming.output.fq1,
@@ -84,7 +88,7 @@ rule kallisto_quant:
         quant = "results/kallisto/{srr_id}/abundance.tsv"
     params:
         bootstrap = "50",
-	outdir = "results/kallisto/{srr_id}"
+        outdir = "results/kallisto/{srr_id}"
     log:
         "logs/kallisto/{srr_id}.log"
     threads:
@@ -103,6 +107,10 @@ rule kallisto_quant:
 
 
 rule combine_gene_quantification:
+    """
+    Custom Python script to collect and format Kallisto results for further
+    processing.
+    """
     input:
         datasets = expand(
             "results/kallisto/{srr_id}/abundance.tsv",
