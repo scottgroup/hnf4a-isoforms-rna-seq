@@ -44,7 +44,7 @@ If working on a cluster, either go for a local installation, or check if it is n
 ## Run
 To run the workflow locally simply run the following command in the Snakemake conda environment, where `$CORES` is the number of avaiable cores.
 ```bash
-snamemake --use-conda --cores=$CORES
+snakemake --use-conda --cores=$CORES
 ```
 
 To run on a Slurm cluster, one can use the following command to output all tasks at once.
