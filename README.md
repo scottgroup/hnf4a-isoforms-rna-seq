@@ -38,11 +38,11 @@ conda activate smake
 ```
 
 
-If working on a cluster, either go for a local installation, or check if it is not aldready installed on your system.
+If working on a cluster, either go for a local installation, or check if it is not already installed on your system.
 
 
 ## Run
-To run the workflow locally simply run the following command in the Snakemake conda environment, where `$CORES` is the number of avaiable cores.
+To run the workflow locally simply run the following command in the Snakemake conda environment, where `$CORES` is the number of available cores.
 ```bash
 snakemake --use-conda --cores=$CORES
 ```
@@ -52,7 +52,7 @@ To run on a Slurm cluster, one can use the following command to output all tasks
 snakemake -j 999 --use-conda --immediate-submit --notemp --cluster-config cluster.json --cluster 'python3 slurmSubmit.py {dependencies}'
 ```
 
-If the cluster nodes do not have internet access, one can run the tasks requiring internet locally with :
+If the cluster nodes do not have internet access, one can run the tasks requiring the internet locally with :
 ```bash
 snakemake all_downloads --use-conda --cores=$CORES
 ```
